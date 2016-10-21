@@ -3,6 +3,7 @@
 *.a
 *.so
 cmd/c4/c4
+cmd/c4d/c4d
 
 # Folders
 _obj
