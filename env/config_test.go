@@ -1,6 +1,8 @@
 package env_test
 
 import (
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/etcenter/c4/env"
@@ -29,4 +31,18 @@ func TestMergeCfg(t *testing.T) {
 	cfg3.Merge(cfg4)
 	is.NotEqual(*cfg3, *cfg4)
 	is.Equal(*cfg3.Root, "/tmp/test_path2")
+}
+
+func TestGlobalConfig(t *testing.T) {
+	is := is.New(t)
+
+	dir, err := ioutil.TempDir("/tmp", "c4test_")
+	is.NoErr(err)
+	defer os.RemoveAll(dir)
+
+	cfg := env.NewConfig().WithRoot(dir)
+
+	env.SetGlobalConfig(cfg)
+	cfg2 := env.GetGlobalConfig()
+	is.Equal(*cfg.Root, *cfg2.Root)
 }

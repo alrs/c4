@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/cheekybits/is"
+	"github.com/etcenter/c4/db"
 	"github.com/etcenter/c4/env"
 )
 
@@ -20,9 +21,13 @@ func DeleteDir(dir *string) {
 
 func TestConfig(is is.I) *env.Config {
 	dir := TempDir(is)
-	return env.NewConfig().WithRoot(dir)
+	temp_db := dir + "/c4.db"
+	test_db, err := db.Open(temp_db)
+	is.NoErr(err)
+	return env.NewConfig().WithRoot(dir).WithDb(test_db)
 }
 
 func TestDeleteConfig(cfg *env.Config) {
+	cfg.Db.Close()
 	DeleteDir(cfg.Root)
 }

@@ -113,3 +113,28 @@ func TestSliceIDFile(t *testing.T) {
 	is.Nil(id)
 	is.Equal(err.Error(), "errorReader triggered error.")
 }
+
+func TestParseBytesIDSlice(t *testing.T) {
+	is := is.New(t)
+
+	var expected_ids asset.IDSlice
+	id1, err := asset.Identify(strings.NewReader("foo"))
+	is.NoErr(err)
+	expected_ids.Push(id1)
+	id2, err := asset.Identify(strings.NewReader("bar"))
+	is.NoErr(err)
+	expected_ids.Push(id2)
+
+	id3, err := asset.Identify(strings.NewReader("baz"))
+	is.NoErr(err)
+	expected_ids.Push(id3)
+	expected_ids.Sort()
+
+	ids := id1.String() + id2.String() + id3.String()
+	test_slice, err := asset.ParseBytesIDSlice([]byte(ids))
+	is.NoErr(err)
+	test_slice.Sort()
+	for idx := range expected_ids.Iterator(nil) {
+		is.Equal(idx.Id, test_slice.Index(idx.I))
+	}
+}
