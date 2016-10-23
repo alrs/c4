@@ -137,14 +137,8 @@ func (db *DB) Iterator(bucket string, key []byte, cancel <-chan struct{}) <-chan
 	bdb := (*bolt.DB)(db)
 
 	out := make(chan Element)
-	// if key == nil {
-	// 	log.Println("key: NIL")
-	// } else {
-	// 	log.Printf("key: %s\n", string(key))
-	// }
 	go func() {
 		err := bdb.View(func(tx *bolt.Tx) error {
-			// Assume bucket exists and has keys
 			b := tx.Bucket([]byte(bucket))
 			if b == nil {
 				return errors.New("No bucket " + bucket)
@@ -154,7 +148,6 @@ func (db *DB) Iterator(bucket string, key []byte, cancel <-chan struct{}) <-chan
 			if key == nil {
 				k, v = c.First()
 			} else {
-				// log.Println("Seeking")
 				k, v = c.Seek(key)
 			}
 
@@ -171,7 +164,6 @@ func (db *DB) Iterator(bucket string, key []byte, cancel <-chan struct{}) <-chan
 					}
 					ent = DBE{k, val}
 				}
-
 				select {
 				case out <- &ent:
 				case <-cancel:

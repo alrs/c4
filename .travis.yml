@@ -2,7 +2,7 @@ language: go
 sudo: false
 
 go:
-  - 1.6
+  - 1.7.1
 before_install:
   - go get golang.org/x/tools/cmd/cover
   - go get github.com/axw/gocov/gocov
@@ -12,6 +12,8 @@ script:
   - go test -coverprofile=asset.coverprofile ./asset
   - go test -coverprofile=db.coverprofile ./db
   - go test -coverprofile=env.coverprofile ./env
+  - go test -coverprofile=test.coverprofile ./test
   - go test -coverprofile=cli.coverprofile ./cmd/c4
+  - go test -coverprofile=daemon.coverprofile ./cmd/c4d
   - $HOME/gopath/bin/gover
   - $HOME/gopath/bin/goveralls -coverprofile=gover.coverprofile -service travis-ci
