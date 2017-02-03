@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 var test_vectors = []string{"alfa", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel", "india"}
@@ -26,7 +26,7 @@ var test_vector_ids = []string{
 func TestIdentification(t *testing.T) {
 	is := is.New(t)
 	for i, t := range test_vectors {
-		id, err := asset.Identify(bytes.NewReader([]byte(t)))
+		id, err := c4.Identify(bytes.NewReader([]byte(t)))
 		is.NoErr(err)
 		is.Equal(id.String(), test_vector_ids[i])
 	}
@@ -34,9 +34,9 @@ func TestIdentification(t *testing.T) {
 
 func TestSliceID(t *testing.T) {
 	is := is.New(t)
-	var ids asset.IDSlice
+	var ids c4.IDSlice
 	for _, t := range test_vectors {
-		id, err := asset.Identify(bytes.NewReader([]byte(t)))
+		id, err := c4.Identify(bytes.NewReader([]byte(t)))
 		is.NoErr(err)
 		ids.Push(id)
 	}
@@ -47,9 +47,9 @@ func TestSliceID(t *testing.T) {
 
 func TestPreSortedSliceID(t *testing.T) {
 	is := is.New(t)
-	var ids_sorted, ids_unsorted asset.IDSlice
+	var ids_sorted, ids_unsorted c4.IDSlice
 	for i := 0; i < 64; i++ {
-		id, err := asset.Identify(bytes.NewReader([]byte{byte(i)}))
+		id, err := c4.Identify(bytes.NewReader([]byte{byte(i)}))
 		is.NoErr(err)
 		ids_sorted.Push(id)
 		ids_unsorted.Push(id)
@@ -69,10 +69,10 @@ func TestPreSortedSliceID(t *testing.T) {
 
 func TestCombinableSliceIDs(t *testing.T) {
 	is := is.New(t)
-	var all_ids, idsA, idsB asset.IDSlice
+	var all_ids, idsA, idsB c4.IDSlice
 	test_count := 64 // must be a power of 2
 	for i := 0; i < test_count; i++ {
-		id, err := asset.Identify(bytes.NewReader([]byte{byte(i)}))
+		id, err := c4.Identify(bytes.NewReader([]byte{byte(i)}))
 		is.NoErr(err)
 		all_ids.Push(id)
 	}

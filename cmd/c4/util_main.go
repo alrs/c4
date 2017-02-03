@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 	flag "github.com/ogier/pflag"
 )
 
@@ -128,7 +128,7 @@ func find_ids(in io.Reader) <-chan string {
 				}
 			}
 			id_out := string(input_bytes) + string(more_bytes)
-			_, err = asset.ParseBytesID([]byte(id_out))
+			_, err = c4.ParseBytesID([]byte(id_out))
 			if err == nil {
 				out <- id_out
 			}

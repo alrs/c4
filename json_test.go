@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -8,15 +8,15 @@ import (
 	"testing"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 func TestMarshalJSON(t *testing.T) {
 	is := is.New(t)
 
 	type testType struct {
-		Name string    `json:"name"`
-		ID   *asset.ID `json:"id"`
+		Name string `json:"name"`
+		ID   *c4.ID `json:"id"`
 	}
 
 	big_empty := big.NewInt(0)
@@ -25,7 +25,7 @@ func TestMarshalJSON(t *testing.T) {
 		Exp string
 	}{
 		{
-			In:  testType{"Test", asset.NIL_ID},
+			In:  testType{"Test", c4.NIL_ID},
 			Exp: `{"name":"Test","id":"c459dsjfscH38cYeXXYogktxf4Cd9ibshE3BHUo6a58hBXmRQdZrAkZzsWcbWtDg5oQstpDuni4Hirj75GEmTc1sFT"}`,
 		},
 		{
@@ -33,7 +33,7 @@ func TestMarshalJSON(t *testing.T) {
 			Exp: `{"name":"Test","id":null}`,
 		},
 		{
-			In:  testType{"Test", (*asset.ID)(big_empty)},
+			In:  testType{"Test", (*c4.ID)(big_empty)},
 			Exp: `{"name":"Test","id":""}`,
 		},
 	} {
@@ -47,8 +47,8 @@ func TestUnarshalJSON(t *testing.T) {
 	is := is.New(t)
 
 	type testType struct {
-		Name string    `json:"name"`
-		ID   *asset.ID `json:"id"`
+		Name string `json:"name"`
+		ID   *c4.ID `json:"id"`
 	}
 
 	for _, test := range []struct {
@@ -57,7 +57,7 @@ func TestUnarshalJSON(t *testing.T) {
 	}{
 		{
 			In:  `{"name":"Test","id":"c459dsjfscH38cYeXXYogktxf4Cd9ibshE3BHUo6a58hBXmRQdZrAkZzsWcbWtDg5oQstpDuni4Hirj75GEmTc1sFT"}`,
-			Exp: testType{"Test", asset.NIL_ID},
+			Exp: testType{"Test", c4.NIL_ID},
 		},
 		{
 			In:  `{"name":"Test","id":null}`,

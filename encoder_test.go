@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 func TestEncoding(t *testing.T) {
@@ -31,7 +31,7 @@ func TestEncoding(t *testing.T) {
 
 func TestIDEncoder(t *testing.T) {
 	is := is.New(t)
-	e := asset.NewIDEncoder()
+	e := c4.NewIDEncoder()
 	is.OK(e)
 	_, err := io.Copy(e, strings.NewReader(`This is a pretend asset file, for testing asset id generation.
 `))
@@ -46,11 +46,11 @@ func TestIDEncoder(t *testing.T) {
 
 func TestIDEncoderReset(t *testing.T) {
 	is := is.New(t)
-	e := asset.NewIDEncoder()
+	e := c4.NewIDEncoder()
 	is.OK(e)
 	for i := 0; i < 10; i++ {
 		s := strconv.Itoa(i)
-		e2 := asset.NewIDEncoder()
+		e2 := c4.NewIDEncoder()
 		_, err := io.Copy(e, strings.NewReader(s))
 		is.NoErr(err)
 		_, err2 := io.Copy(e2, strings.NewReader(s))

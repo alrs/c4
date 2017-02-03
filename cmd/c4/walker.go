@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 type FsItem struct {
-	Id       *asset.ID
+	Id       *c4.ID
 	Path     *string
 	Folder   bool
 	Link     bool
@@ -81,11 +81,11 @@ func (f *FsItem) IsFile() bool {
 	return !f.Folder && !f.Link && !f.Socket
 }
 
-func (f *FsItem) Identify() (*asset.ID, error) {
+func (f *FsItem) Identify() (*c4.ID, error) {
 	return fileID(f.Path)
 }
 
-func walkFilesystem(depth int, filename string, relative_path string) (*asset.ID, error) {
+func walkFilesystem(depth int, filename string, relative_path string) (*c4.ID, error) {
 	path, err := filepath.Abs(filename)
 	if err != nil {
 		return nil, err
@@ -121,7 +121,7 @@ func walkFilesystem(depth int, filename string, relative_path string) (*asset.ID
 		if err != nil {
 			return item.Id, err
 		}
-		var childIDs asset.IDSlice
+		var childIDs c4.IDSlice
 		for _, file := range files {
 			path := filename + string(filepath.Separator) + file.Name()
 			id, err := walkFilesystem(depth-1, path, relative_path)

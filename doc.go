@@ -1,4 +1,4 @@
-// Package c4 contains Go implementations for core C4 concepts.
+// Package c4 implements the C4 framework, consisting of C4 ID, C4lang, and C4 PKI.
 //
 // Creating IDs
 //

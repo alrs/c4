@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 func TestIDSliceSort(t *testing.T) {
@@ -22,10 +22,10 @@ func TestIDSliceSort(t *testing.T) {
 	bigSmall := big.NewInt(0)
 	bigBig = bigBig.SetBytes(b)
 	bigSmall = bigSmall.SetBytes(s)
-	bigID := asset.ID(*bigBig)
-	smallID := asset.ID(*bigSmall)
+	bigID := c4.ID(*bigBig)
+	smallID := c4.ID(*bigSmall)
 
-	var idSlice asset.IDSlice
+	var idSlice c4.IDSlice
 
 	idSlice.Push(&bigID)
 	idSlice.Push(&smallID)
@@ -39,10 +39,10 @@ func TestIDSliceSort(t *testing.T) {
 func TestIDSliceString(t *testing.T) {
 	is := is.New(t)
 
-	var ids asset.IDSlice
-	id1, err := asset.Identify(strings.NewReader("foo"))
+	var ids c4.IDSlice
+	id1, err := c4.Identify(strings.NewReader("foo"))
 	is.NoErr(err)
-	id2, err := asset.Identify(strings.NewReader("bar"))
+	id2, err := c4.Identify(strings.NewReader("bar"))
 	is.NoErr(err)
 
 	ids.Push(id1)
@@ -54,12 +54,12 @@ func TestIDSliceString(t *testing.T) {
 func TestIDSliceSearchIDs(t *testing.T) {
 	is := is.New(t)
 
-	var ids asset.IDSlice
-	id1, err := asset.Identify(strings.NewReader("foo"))
+	var ids c4.IDSlice
+	id1, err := c4.Identify(strings.NewReader("foo"))
 	is.NoErr(err)
-	id2, err := asset.Identify(strings.NewReader("bar"))
+	id2, err := c4.Identify(strings.NewReader("bar"))
 	is.NoErr(err)
-	id3, err := asset.Identify(strings.NewReader("baz"))
+	id3, err := c4.Identify(strings.NewReader("baz"))
 	is.NoErr(err)
 
 	ids.Push(id1)
@@ -70,15 +70,15 @@ func TestIDSliceSearchIDs(t *testing.T) {
 	is.True(id2.Less(id1))
 	is.True(id3.Less(id2))
 
-	is.Equal(asset.SearchIDs(ids, id1), 2)
-	is.Equal(asset.SearchIDs(ids, id2), 1)
-	is.Equal(asset.SearchIDs(ids, id3), 0)
+	is.Equal(c4.SearchIDs(ids, id1), 2)
+	is.Equal(c4.SearchIDs(ids, id2), 1)
+	is.Equal(c4.SearchIDs(ids, id3), 0)
 }
 
 func TestSliceIDFile(t *testing.T) {
 	is := is.New(t)
 
-	id, err := asset.Identify(errorReader(true))
+	id, err := c4.Identify(errorReader(true))
 	is.Err(err)
 	is.Nil(id)
 	is.Equal(err.Error(), "errorReader triggered error.")

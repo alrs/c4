@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -8,13 +8,13 @@ import (
 	"testing/iotest"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 func TestIdentify(t *testing.T) {
 	is := is.New(t)
 
-	id, err := asset.Identify(iotest.DataErrReader(strings.NewReader("foo")))
+	id, err := c4.Identify(iotest.DataErrReader(strings.NewReader("foo")))
 	is.NoErr(err)
 	is.Equal(id.String(), "c45xZeXwMSpqXjpDumcHMA6mhoAmGHkUo7r9WmN2UgSEQzj9KjgseaQdkEJ11fGb5S1WEENcV3q8RFWwEeVpC7Fjk2")
 }
@@ -32,7 +32,7 @@ func (e errorReader) Read(p []byte) (int, error) {
 func TestIOFailure(t *testing.T) {
 	is := is.New(t)
 
-	id, err := asset.Identify(errorReader(true))
+	id, err := c4.Identify(errorReader(true))
 	is.Err(err)
 	is.Nil(id)
 	is.Equal(err.Error(), "errorReader triggered error.")

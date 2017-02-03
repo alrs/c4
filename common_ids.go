@@ -1,4 +1,4 @@
-package asset
+package c4
 
 import (
 	"strings"

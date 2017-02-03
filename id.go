@@ -1,5 +1,4 @@
-// Package asset provides c4id functions.
-package asset
+package c4
 
 import (
 	"bytes"
@@ -9,8 +8,7 @@ import (
 
 const (
 	// Charset = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
-	Charset = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-	base    = 58
+	base = 58
 )
 
 var (

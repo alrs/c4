@@ -1,4 +1,4 @@
-package asset_test
+package c4_test
 
 import (
 	// "bytes"
@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4/asset"
+	"github.com/etcenter/c4"
 )
 
 func TestRawBytes(t *testing.T) {
@@ -16,10 +16,10 @@ func TestRawBytes(t *testing.T) {
 	// for i := 0; i < 64; i++ {
 	//   b = append(b, 0xFF)
 	// }
-	// id := asset.BytesToID(b)
+	// id := c4.BytesToID(b)
 	// is.Equal(id.String(), `c467RPWkcUr5dga8jgywjSup7CMoA9FNqkNjEFgAkEpF9vNktFnx77e2Js11EDL3BNu9MaKFUbacZRt1HYym4b8RNp`)
 
-	// id2, err := asset.ParseID(`c41111111111111111111111111111111111111111111111111111111111111111111111111111111111111121`)
+	// id2, err := c4.ParseID(`c41111111111111111111111111111111111111111111111111111111111111111111111111111111111111121`)
 	// tb2 := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 58}
 	// is.NoErr(err)
 	// b2 := id2.RawBytes()
@@ -50,7 +50,7 @@ func TestRawBytes(t *testing.T) {
 			IdStr: `c41111111111111111111111111111111111111111111111111111111111111111111111111111111111121111`,
 		},
 	} {
-		id, err := asset.ParseID(test.IdStr)
+		id, err := c4.ParseID(test.IdStr)
 		is.NoErr(err)
 		for i, bb := range id.RawBytes() {
 			is.Equal(bb, test.Bytes[i])
@@ -62,16 +62,16 @@ func TestRawBytes(t *testing.T) {
 func TestRawSum(t *testing.T) {
 	is := is.New(t)
 
-	id1, err := asset.Identify(strings.NewReader("foo"))
+	id1, err := c4.Identify(strings.NewReader("foo"))
 	is.NoErr(err)
-	id2, err := asset.Identify(strings.NewReader("bar"))
+	id2, err := c4.Identify(strings.NewReader("bar"))
 	is.NoErr(err)
 
 	is.True(id2.Less(id1))
 
 	b := id2.RawBytes()
 	b = append(b, id1.RawBytes()...)
-	expectedSum, err := asset.Identify(bytes.NewReader(b))
+	expectedSum, err := c4.Identify(bytes.NewReader(b))
 	is.NoErr(err)
 
 	testSum, err := id1.RawSum(id2)
