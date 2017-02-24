@@ -10,11 +10,17 @@ func (s IDSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
 
 // Sort is a convenience method.
 func (s IDSlice) Sort() {
+	if s.Len() < 2 {
+		return
+	}
 	sort.Sort(s)
 }
 
 // Append id to slice.
 func (s *IDSlice) Push(id *ID) {
+	if id == nil {
+		return
+	}
 	*s = append(*s, id)
 }
 
@@ -44,6 +50,12 @@ func (s *IDSlice) ID() (*ID, error) {
 }
 
 func (s IDSlice) PreSortedID() (*ID, error) {
+	if s.Len() == 0 {
+		return nil, nil
+	}
+	if s.Len() == 1 {
+		return s[0], nil
+	}
 	var previous_idset IDSlice
 	idset := s
 	round := 0

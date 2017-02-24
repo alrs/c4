@@ -89,6 +89,9 @@ func (x *ID) Cmp(y *ID) int {
 	if y == nil {
 		return -1
 	}
+	if x == nil {
+		return 1
+	}
 	bigX := big.Int(*x)
 	bigY := big.Int(*y)
 	return bigX.Cmp(&bigY)

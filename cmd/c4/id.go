@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/etcenter/c4"
+	"github.com/Avalanche-io/c4"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

@@ -8,6 +8,9 @@ import (
 
 // Return the 64 raw bytes of a c4 id.  I.e. the actual sha512.
 func (id *ID) RawBytes() (b []byte) {
+	if id == nil {
+		return
+	}
 	bignum := big.Int(*id)
 	b_raw := (&bignum).Bytes()
 	bytes64 := make([]byte, 64)

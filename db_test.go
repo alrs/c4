@@ -10,8 +10,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/Avalanche-io/c4"
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4"
 )
 
 func Setup(t *testing.T) (is.I, *c4.DB, func()) {

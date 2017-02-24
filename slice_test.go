@@ -83,3 +83,25 @@ func TestSliceIDFile(t *testing.T) {
 	is.Nil(id)
 	is.Equal(err.Error(), "errorReader triggered error.")
 }
+
+func TestEmptySlice(t *testing.T) {
+	is := is.New(t)
+
+	var ids c4.IDSlice
+	ids_id, err := ids.ID()
+	is.NoErr(err)
+	is.Nil(ids_id)
+}
+
+func TestSliceOfOne(t *testing.T) {
+	is := is.New(t)
+
+	var ids c4.IDSlice
+	id, err := c4.Identify(strings.NewReader("foo"))
+	is.NoErr(err)
+	ids.Push(id)
+
+	ids_id, err := ids.ID()
+	is.NoErr(err)
+	is.Equal(ids_id, id)
+}

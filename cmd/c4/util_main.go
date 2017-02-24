@@ -97,12 +97,6 @@ func find_ids(in io.Reader) <-chan string {
 			cnt++
 			input_bytes := make([]byte, 90)
 			n, err := in.Read(input_bytes)
-			if err != nil {
-				if err == io.EOF {
-					return
-				}
-				panic(err)
-			}
 			offset := 0
 			found := false
 			for i := 0; i < n-1; i++ {
@@ -112,6 +106,12 @@ func find_ids(in io.Reader) <-chan string {
 					found = true
 					break
 				}
+			}
+			if err != nil {
+				if err == io.EOF {
+					return
+				}
+				panic(err)
 			}
 			if !found {
 				continue

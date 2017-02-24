@@ -3,8 +3,8 @@ package c4_test
 import (
 	"testing"
 
+	"github.com/Avalanche-io/c4"
 	"github.com/cheekybits/is"
-	"github.com/etcenter/c4"
 )
 
 func TestCheckCharacterSet(t *testing.T) {
